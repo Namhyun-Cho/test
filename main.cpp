@@ -1,28 +1,33 @@
 #include <iostream>
-#include <vector>
+#include <array>
 #include <algorithm>
 #include <numeric>
 
 int main() {
-    std::vector<int> numbers = {5, 3, 8, 1, 9, 2, 7, 4, 6, 10};
+    std::ios_base::sync_with_stdio(false);
+    std::cin.tie(nullptr);
+
+    constexpr std::array numbers = {5, 3, 8, 1, 9, 2, 7, 4, 6, 10};
 
     std::cout << "Original: ";
-    for (int n : numbers) std::cout << n << " ";
-    std::cout << "\n";
+    for (const auto n : numbers) std::cout << n << ' ';
+    std::cout << '\n';
 
-    std::sort(numbers.begin(), numbers.end());
+    auto sorted = numbers;
+    std::sort(sorted.begin(), sorted.end());
 
     std::cout << "Sorted:   ";
-    for (int n : numbers) std::cout << n << " ";
-    std::cout << "\n";
+    for (const auto n : sorted) std::cout << n << ' ';
+    std::cout << '\n';
 
-    int sum = std::accumulate(numbers.begin(), numbers.end(), 0);
-    double avg = static_cast<double>(sum) / numbers.size();
+    const auto [min, max] = std::minmax_element(sorted.begin(), sorted.end());
+    const int sum = std::accumulate(sorted.begin(), sorted.end(), 0);
+    const double avg = static_cast<double>(sum) / sorted.size();
 
-    std::cout << "Sum: " << sum << "\n";
-    std::cout << "Average: " << avg << "\n";
-    std::cout << "Min: " << numbers.front() << "\n";
-    std::cout << "Max: " << numbers.back() << "\n";
+    std::cout << "Sum: " << sum << '\n'
+              << "Average: " << avg << '\n'
+              << "Min: " << *min << '\n'
+              << "Max: " << *max << '\n';
 
     return 0;
 }
